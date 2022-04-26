@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GoPos Recruitment Task</string>
+    <string name="vat">Stawka VAT: </string>
+    <string name="category">Kategoria: </string>
+    <string name="name">Nazwa: </string>
+    <string name="price">Cena: </string>
 </resources>

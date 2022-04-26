@@ -1,7 +1,9 @@
 package api
 
+import android.content.Context
 import android.util.Log
 import com.google.gson.JsonObject
+import database.DataAccess
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -12,14 +14,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "ApiRequest"
 
-class ApiRequest {
+class ApiRequest (){
     val ORGANIZATION_ID = 27
     var fullCredentials = Credentials()
     var basicCredentials =
         Credentials.basic(fullCredentials.CLIENT_ID, fullCredentials.CLIENT_SECRET)
-    lateinit var parser: Parser
 
     var token = OAuthToken(null, null)
+    val dataAccess = DataAccess()
 
     fun createApiRequest() {
         val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
@@ -53,18 +55,17 @@ class ApiRequest {
                     Log.i(TAG, response.body()?.accessToken.toString())
                     token = response.body()!!
 
-                    request.getItem(ORGANIZATION_ID).enqueue(object : Callback<JsonObject> {
-                        override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    request.getItem(ORGANIZATION_ID).enqueue(object : Callback<ProductList> {
+                        override fun onFailure(call: Call<ProductList>, t: Throwable) {
                             Log.i(TAG, t.toString())
                         }
 
                         override fun onResponse(
-                            call: Call<JsonObject>,
-                            response: Response<JsonObject>,
+                            call: Call<ProductList>,
+                            response: Response<ProductList>,
                         ) {
                             Log.i(TAG, "json response " + response.body().toString())
-                            parser = Parser(response.body()!!)
-                            parser.parseData()
+                            dataAccess.insertData(response.body()!!.productArray)
                         }
                     })
                 }

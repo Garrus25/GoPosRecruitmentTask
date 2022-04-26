@@ -1,27 +1,40 @@
 package com.example.goposrecruitmenttask
 
+import ItemAdapter
 import android.os.Bundle
 import android.util.Log
+import android.widget.ListView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import api.*
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
+import api.ApiRequest
+import com.example.goposrecruitmenttask.databinding.ActivityMainBinding
+import database.DataAccess
+import database.Item
 import database.ObjectBox
-import okhttp3.Credentials
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import io.objectbox.BoxStore
+
 
 class MainActivity : AppCompatActivity() {
-    val apiRequest : ApiRequest = ApiRequest()
+    private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: ItemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
         ObjectBox.init(this)
-        apiRequest.createApiRequest()
+
+        viewModel.start()
+        viewModel.fetchDataFromDB()
+
+        val itemList: ArrayList<Item> = ArrayList()
+        val adapter = ItemAdapter(this, itemList)
+
+        val listView: ListView = binding.itemList
+
+        viewModel.populateView(adapter)
+        listView.adapter = adapter
+        setContentView(listView)
     }
 }

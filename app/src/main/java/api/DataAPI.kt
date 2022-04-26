@@ -11,7 +11,7 @@ interface DataAPI {
     }
 
     @GET("api/v3/{organizationId}/items/?include=value1%2Cvalue2")
-    fun getItem(@Path("organizationId") organizationId: Int): Call<JsonObject>
+    fun getItem(@Path("organizationId") organizationId: Int): Call<ProductList>
 
     @GET("oauth/token")
     fun postCredentials(

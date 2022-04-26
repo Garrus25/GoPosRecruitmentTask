@@ -5,7 +5,7 @@ import io.objectbox.annotation.Id
 
 @Entity
 data class Item(
-    @Id var id: Long = 0,
+    @Id(assignable = true) var id: Long = 0,
     var price: Int = 0,
     var name: String = "",
     var tax_id: Int = 0,
