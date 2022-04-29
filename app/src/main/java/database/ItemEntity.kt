@@ -1,14 +1,15 @@
 package database
 
+import androidx.annotation.Nullable
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
 @Entity
-data class Item(
+data class ItemEntity(
     @Id(assignable = true) var id: Long = 0,
     var price: Int = 0,
     var name: String = "",
-    var tax_id: Int = 0,
-    var category_id: String = "",
-    var image_link: String = "",
+    var taxRate: String = "",
+    var category: String = "",
+    var image_link: String = ""
 )

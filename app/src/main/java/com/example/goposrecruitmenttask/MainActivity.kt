@@ -2,16 +2,12 @@ package com.example.goposrecruitmenttask
 
 import ItemAdapter
 import android.os.Bundle
-import android.util.Log
 import android.widget.ListView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import api.ApiRequest
 import com.example.goposrecruitmenttask.databinding.ActivityMainBinding
-import database.DataAccess
-import database.Item
+import database.ItemEntity
 import database.ObjectBox
-import io.objectbox.BoxStore
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.start()
         viewModel.fetchDataFromDB()
 
-        val itemList: ArrayList<Item> = ArrayList()
+        val itemList: ArrayList<ItemEntity> = ArrayList()
         val adapter = ItemAdapter(this, itemList)
 
         val listView: ListView = binding.itemList

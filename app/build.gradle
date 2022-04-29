@@ -8,6 +8,10 @@ plugins {
 android {
     compileSdk 31
 
+    packagingOptions {
+        resources.excludes.add("META-INF/**/*")
+    }
+
     defaultConfig {
         applicationId "com.example.goposrecruitmenttask"
         minSdk 16

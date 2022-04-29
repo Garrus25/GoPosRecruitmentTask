@@ -2,19 +2,17 @@ package com.example.goposrecruitmenttask
 
 import ItemAdapter
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import api.ApiRequest
 import database.DataAccess
-import database.Item
+import database.ItemEntity
 import io.objectbox.Box
 
 class ItemViewModel : ViewModel() {
     var dataAccess = DataAccess()
     val apiRequest: ApiRequest = ApiRequest()
 
-    var itemBox: Box<Item>? = null
+    var itemBox: Box<ItemEntity>? = null
 
     fun start() {
         if (itemBox == null) {
@@ -31,7 +29,7 @@ class ItemViewModel : ViewModel() {
 
     fun populateView(adapter: ItemAdapter) {
         itemBox!!.all?.forEach {
-            adapter.add(Item(it.id, it.price, it.name, it.tax_id, it.category_id, it.image_link))
+            adapter.add(ItemEntity(it.id, it.price, it.name,it.taxRate,it.category,it.image_link))
         }
     }
 }

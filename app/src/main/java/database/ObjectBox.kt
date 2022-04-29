@@ -7,14 +7,14 @@ import io.objectbox.BoxStore
 private const val TAG = "BoxStore"
 
 object ObjectBox {
+    private var isInitialized = false
 
-    var initFlag = false
     lateinit var store: BoxStore
         private set
 
     fun init(context: Context) {
-        if (!initFlag) {
-            initFlag = true
+        if (!isInitialized) {
+            isInitialized = true
             store = MyObjectBox.builder()
                 .androidContext(context.applicationContext)
                 .build()

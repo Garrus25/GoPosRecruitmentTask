@@ -1,4 +1,4 @@
-package api
+package api.dataClasses
 
 import com.google.gson.annotations.SerializedName
 

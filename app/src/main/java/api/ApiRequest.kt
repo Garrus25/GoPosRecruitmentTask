@@ -1,7 +1,10 @@
 package api
 
-import android.content.Context
 import android.util.Log
+import api.dataClasses.LoginData
+import api.dataClasses.OAuthToken
+import api.dataClasses.Product
+import api.dataClasses.ProductList
 import com.google.gson.JsonObject
 import database.DataAccess
 import okhttp3.Credentials
@@ -14,12 +17,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "ApiRequest"
 
-class ApiRequest (){
+class ApiRequest{
     val ORGANIZATION_ID = 27
-    var fullCredentials = Credentials()
-    var basicCredentials =
-        Credentials.basic(fullCredentials.CLIENT_ID, fullCredentials.CLIENT_SECRET)
-
+    var fullCredentials = LoginData()
     var token = OAuthToken(null, null)
     val dataAccess = DataAccess()
 
@@ -27,7 +27,7 @@ class ApiRequest (){
         val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
             val originalRequest = chain.request()
             val builder = originalRequest.newBuilder().header("Authorization",
-                if (token != null) "${token.tokenType}${token.accessToken}" else basicCredentials)
+                "${token.tokenType}${token.accessToken}")
             val newRequest = builder.build()
             chain.proceed(newRequest)
         }.build()
