@@ -3,9 +3,11 @@ package database
 import android.util.Log
 import api.dataClasses.Product
 import io.objectbox.Box
+import javax.inject.Inject
 
-class DataAccess {
+class DataAccess @Inject constructor(){
     val itemsBox = ObjectBox.store.boxFor(ItemEntity::class.java)
+
     fun insertData(item: ArrayList<Product>) {
         var link = ""
 
@@ -16,7 +18,6 @@ class DataAccess {
             }else{
                 link = it.image.default_link
             }
-
             itemsBox.put(ItemEntity(
                 it.id.toLong(),
                 it.price.amount,
@@ -29,6 +30,7 @@ class DataAccess {
             Log.i("Text",it.toString())
         }
     }
+
 
     fun getData(): Box<ItemEntity>? {
         return itemsBox

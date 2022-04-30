@@ -22,5 +22,5 @@ interface DataAPI {
         @Query("client_id", encoded = true) client_id: String?,
         @Query("username", encoded = true) login: String?,
         @Query("grant_type") grant_type : String = "password"
-    ): Call<OAuthToken>?
+    ): Call<OAuthToken>
 }

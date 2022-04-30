@@ -14,17 +14,26 @@ class ItemViewModel : ViewModel() {
 
     var itemBox: Box<ItemEntity>? = null
 
+    @Synchronized
     fun start() {
         if (itemBox == null) {
             apiRequest.createApiRequest()
+            Log.i("ViewModel","startcalled")
         }
     }
-
+    @Synchronized
     fun fetchDataFromDB() {
         if (itemBox == null) {
             itemBox = dataAccess.getData()!!
+            Log.i("ViewModel","fetchcalled")
             Log.i("ViewModel", itemBox!!.all.toString())
         }
+    }
+
+    @Synchronized
+    fun startAll(){
+        start()
+        fetchDataFromDB()
     }
 
     fun populateView(adapter: ItemAdapter) {
