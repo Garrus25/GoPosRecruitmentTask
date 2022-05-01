@@ -14,14 +14,12 @@ class ItemViewModel : ViewModel() {
 
     var itemBox: Box<ItemEntity>? = null
 
-    @Synchronized
-    fun start() {
+    fun createRequest() {
         if (itemBox == null) {
             apiRequest.createApiRequest()
             Log.i("ViewModel","startcalled")
         }
     }
-    @Synchronized
     fun fetchDataFromDB() {
         if (itemBox == null) {
             itemBox = dataAccess.getData()!!
@@ -30,9 +28,8 @@ class ItemViewModel : ViewModel() {
         }
     }
 
-    @Synchronized
     fun startAll(){
-        start()
+        createRequest()
         fetchDataFromDB()
     }
 

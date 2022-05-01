@@ -51,6 +51,7 @@ class ApiRequest {
     fun dataRequest(request: DataAPI) {
         val b = request.getItem(ORGANIZATION_ID)
         val responseBody = b.execute().body()!!
+        Log.i(TAG,responseBody.toString())
 
         dataAccess.insertData(responseBody.productArray)
     }
